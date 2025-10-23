@@ -1,11 +1,10 @@
 package com.example.springexample.services;
-
 import com.example.springexample.dto.CommentDto;
-
+import org.springframework.stereotype.Service;
 import java.util.Collection;
-import java.util.List;
 import java.util.TreeMap;
 
+@Service
 public class CommentCRUDService implements CRUDService<CommentDto>{
     private final TreeMap<Integer, CommentDto> storage = new TreeMap<>();
 
@@ -42,7 +41,6 @@ public class CommentCRUDService implements CRUDService<CommentDto>{
         }
         item.setId(id);
         storage.put(id, item);
-
     }
 
     @Override
