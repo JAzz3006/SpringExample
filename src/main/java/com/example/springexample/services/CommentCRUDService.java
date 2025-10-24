@@ -1,55 +1,77 @@
 package com.example.springexample.services;
 import com.example.springexample.dto.CommentDto;
+import com.example.springexample.entity.Comment;
+import com.example.springexample.repositories.CommentRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.Collection;
-import java.util.TreeMap;
 
+@Slf4j
+@RequiredArgsConstructor
 @Service
 public class CommentCRUDService implements CRUDService<CommentDto>{
-    private final TreeMap<Integer, CommentDto> storage = new TreeMap<>();
+//    private final TreeMap<Integer, CommentDto> storage = new TreeMap<>();
+    private final CommentRepository repository;
 
     @Override
     public CommentDto getById(Integer id) {
-        System.out.println("Get by ID " + id);
-        if (!storage.containsKey(id)) {
-            System.out.println("No such ID " + id);
-            return null;
-        }
-        return storage.get(id);
+        log.info("Get by ID " + id);
+//        if (!storage.containsKey(id)) {
+//            System.out.println("No such ID " + id);
+//            return null;
+//        }
+        Comment comment = repository.findById(id).orElseThrow();
+        return mapToDto(comment);
     }
 
     @Override
     public Collection<CommentDto> getAll() {
-        System.out.println("Get all");
-        return storage.values();
+        log.info("Get all");
+        return repository.findAll().stream()
+                .map(CommentCRUDService::mapToDto)
+                .toList();
     }
 
     @Override
     public void create(CommentDto item) {
-        System.out.println("Create");
-        Integer newKey = (storage.isEmpty() ? 0 : storage.lastKey()) + 1;
-        item.setId(newKey);
-        storage.put(newKey, item);
+        log.info("Create");
+        repository.save(mapToEntity(item));
     }
 
     @Override
-    public void update(Integer id, CommentDto item) {
-        System.out.println("Update " + id);
-        if (!storage.containsKey(id)) {
-            System.out.println("No such id to update: " + id);
-            return;
-        }
-        item.setId(id);
-        storage.put(id, item);
+    public void update(CommentDto item) {
+        log.info("Update");
+//        if (!storage.containsKey(id)) {
+//            System.out.println("No such id to update: " + id);
+//            return;
+//        }
+        repository.save(mapToEntity(item));
     }
 
     @Override
     public void delete(Integer id) {
-        System.out.println("Delete " + id);
-        if (!storage.containsKey(id)){
-            System.out.println("No such id to delete: " + id);
-            return;
-        }
-        storage.remove(id);
+        log.info("Delete " + id);
+//        if (!storage.containsKey(id)){
+//            System.out.println("No such id to delete: " + id);
+//            return;
+//        }
+        repository.deleteById(id);
+    }
+
+    public static CommentDto mapToDto(Comment comment){
+        CommentDto commentDto = new CommentDto();
+        commentDto.setId(comment.getId());
+        commentDto.setText(comment.getText());
+        commentDto.setAuthor(comment.getAuthor());
+        return commentDto;
+    }
+
+    public static Comment mapToEntity(CommentDto commentDto){
+        Comment comment = new Comment();
+        comment.setId(commentDto.getId());
+        comment.setText(commentDto.getText());
+        comment.setAuthor(commentDto.getAuthor());
+        return comment;
     }
 }
