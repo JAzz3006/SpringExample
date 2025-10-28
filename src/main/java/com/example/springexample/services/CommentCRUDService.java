@@ -63,7 +63,7 @@ public class CommentCRUDService implements CRUDService<CommentDto>{
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
         commentDto.setText(comment.getText());
-        commentDto.setAuthor(comment.getAuthor());
+        commentDto.setAuthor(AuthorCRUDService.mapToDto(comment.getAuthor()));
         return commentDto;
     }
 
@@ -71,7 +71,7 @@ public class CommentCRUDService implements CRUDService<CommentDto>{
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
         comment.setText(commentDto.getText());
-        comment.setAuthor(commentDto.getAuthor());
+        comment.setAuthor(AuthorCRUDService.mapToEntity(commentDto.getAuthor()));
         return comment;
     }
 }

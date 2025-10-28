@@ -1,18 +1,16 @@
 package com.example.springexample.controllers;
 import com.example.springexample.dto.CommentDto;
 import com.example.springexample.services.CommentCRUDService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
 @RequestMapping("/comment")
+@RequiredArgsConstructor
 public class CommentController {
 
     private final CommentCRUDService commentService;
-
-    public CommentController(CommentCRUDService commentService){
-        this.commentService = commentService;
-    }
 
     @GetMapping(path = "/{id}")
     public CommentDto getCommentById(@PathVariable Integer id){
@@ -31,7 +29,8 @@ public class CommentController {
 
     @PutMapping(path = "/{id}")
     public void updateComment(@PathVariable Integer id, @RequestBody CommentDto commentDto){
-        commentService.update(id, commentDto);
+        commentDto.setId(id);
+        commentService.update(commentDto);
     }
 
     @DeleteMapping(path = "/{id}")

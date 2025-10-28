@@ -11,5 +11,5 @@ import lombok.Setter;
 public class CommentDto {
     private Integer id;
     private String text;
-    private String author;
+    private AuthorDto author;
 }
