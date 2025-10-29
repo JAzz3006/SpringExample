@@ -18,7 +18,7 @@ public class CommentController {
     }
 
     @GetMapping
-    public Collection<CommentDto> getAllComments(){
+        public Collection<CommentDto> getAllComments(){
         return commentService.getAll();
     }
 
