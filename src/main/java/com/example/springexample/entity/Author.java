@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,6 +28,6 @@ public class Author {
     @Column (name = "rating")
     private Long rating;
 
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
 }

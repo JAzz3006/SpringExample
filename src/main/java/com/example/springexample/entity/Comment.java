@@ -19,7 +19,7 @@ public class Comment {
     @Column(name = "text")
     private String text;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
     private Author author;
 
