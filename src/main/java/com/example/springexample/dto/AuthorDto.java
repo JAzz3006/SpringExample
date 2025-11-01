@@ -1,5 +1,8 @@
 package com.example.springexample.dto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -8,5 +11,6 @@ public class AuthorDto {
     private String firstName;
     private String lastName;
     private Long rating;
-    private List<CommentDto> comments;
+    @JsonIgnore
+    private List<CommentDto> comments = new ArrayList<>();
 }
