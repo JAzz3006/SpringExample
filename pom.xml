@@ -42,7 +42,7 @@
             <artifactId>lombok</artifactId>
             <version>1.18.38</version>
         </dependency>
-        <dependency>
+   <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
         </dependency>
