@@ -2,6 +2,7 @@ package com.example.springexample.services;
 import com.example.springexample.dto.CommentDto;
 import com.example.springexample.entity.Author;
 import com.example.springexample.entity.Comment;
+import com.example.springexample.exceptions.CommentNotFoundException;
 import com.example.springexample.repositories.AuthorRepository;
 import com.example.springexample.repositories.CommentRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,8 @@ public class CommentCRUDService implements CRUDService<CommentDto>{
 //            System.out.println("No such ID " + id);
 //            return null;
 //        }
-        Comment comment = commentRepository.findById(id).orElseThrow();
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new CommentNotFoundException(id));
         return mapToDto(comment);
     }
 

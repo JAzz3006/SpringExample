@@ -27,6 +27,6 @@ public class Author {
     private Long rating;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
+//    @JsonIgnore
     private List<Comment> comments = new ArrayList<>();
 }

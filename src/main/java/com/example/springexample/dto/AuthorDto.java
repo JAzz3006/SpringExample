@@ -11,6 +11,6 @@ public class AuthorDto {
     private String firstName;
     private String lastName;
     private Long rating;
-    @JsonIgnore
+//    @JsonIgnore
     private List<CommentDto> comments = new ArrayList<>();
 }
