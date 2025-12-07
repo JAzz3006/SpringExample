@@ -10,17 +10,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@Testcontainers
+@Testcontainers //уоказывает, что приложение будет автоматически управлять жизненным циклом тестового контейнера
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test") //указывает, что настройки будут браться из application-test.properties
 public class SpringExampleApplicationTests {
 
     @LocalServerPort
@@ -35,20 +36,10 @@ public class SpringExampleApplicationTests {
     private TestRestTemplate template = new TestRestTemplate();
 
     //тут создаем контейнер с postgresql 14
-    @Container
+    @Container //указывает, что это тестовый контейнер. Он будет автоматически создан для работы
     public static PostgreSQLContainer<?> postgres =
             new PostgreSQLContainer<>("postgres:14");
     //это создается объект, который использует докер-контейнер с СУБД PostgreSQL, что позволит запускать БД в изолированной среде
-
-//    @BeforeAll
-//    public static void beforeAll(){
-//        postgres.start();
-//    }
-//
-//    @AfterAll
-//    public static void afterAll(){
-//        postgres.stop();
-//    }
 
     @DynamicPropertySource
     public static void configureProperties(DynamicPropertyRegistry registry){
